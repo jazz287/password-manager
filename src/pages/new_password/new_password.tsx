@@ -1,11 +1,17 @@
 import Heading_bar from "../../components/Heading_bar";
 import { Container } from "../../components/container";
 import Custom_button from "../../components/custom_button";
+import Home from "../home/home";
 import "./new_password.css";
-export default function New_password() {
+
+interface PageProp {
+  pageSetterFunction: Function;
+}
+
+export default function New_password(props: PageProp) {
   return (
     <div>
-      <Heading_bar title="New Password"/>
+      <Heading_bar title="New Password" />
       <Container>
         <div>
           Site:
@@ -23,8 +29,22 @@ export default function New_password() {
             <div className="strength-bar"></div>
           </div>
         </div>
-        <Custom_button title="Cancel" />
-        <Custom_button title="Save" />
+        <Custom_button
+          title="Cancel"
+          onClick={function () {
+            props.pageSetterFunction(
+              <Home pageSetterFunction={props.pageSetterFunction} />
+            );
+          }}
+        />
+        <Custom_button
+          title="Save"
+          onClick={function () {
+            props.pageSetterFunction(
+              <Home pageSetterFunction={props.pageSetterFunction} />
+            );
+          }}
+        />
       </Container>
     </div>
   );
