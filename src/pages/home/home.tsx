@@ -10,7 +10,7 @@ export default function Home() {
       <Heading_bar title="Password Manager"/>
       <Container>
         <center>
-          <Custom_button title="New Password" />
+          <Custom_button title="New Password"/>
         </center>
         <br />
         <br />
