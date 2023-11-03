@@ -1,8 +1,10 @@
+import Heading_bar from "../home/Heading_bar";
+import Custom_button from "../home/custom_button";
 import "./new_password.css";
 export default function New_password() {
   return (
     <div>
-      <h1>Add New Password</h1>
+      <Heading_bar />
       <div>
         Site:
         <input type="text" />
@@ -14,13 +16,13 @@ export default function New_password() {
       <div>
         Password:
         <input type="text" />
-        <button>Generate Password</button>
+        <Custom_button title="Generate Password" />
         <div className="strength-bg">
           <div className="strength-bar"></div>
         </div>
       </div>
-      <button>Save</button>
-      <button>Cancel</button>
+      <Custom_button title="Cancel" />
+      <Custom_button title="Save" />
     </div>
   );
 }

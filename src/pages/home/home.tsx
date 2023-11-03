@@ -1,13 +1,19 @@
 import { Search } from "@carbon/icons-react";
+import { SiteCard } from "./site_card";
+import Custom_button from "./custom_button";
+import Heading_bar from "./Heading_bar";
 
 export default function Home() {
   return (
     <div>
-      <div style={{display:'flex', width:'100vw', justifyContent:'space-between'}}>
-        <h1>Password Manager </h1>
-        <Search />
-      </div>
-      <button>New Password</button>
+      <Heading_bar />
+      <Custom_button title="New Password" />
+      <br />
+      <br />
+      <SiteCard />
+      <SiteCard />
+      <SiteCard />
+      <SiteCard />
     </div>
   );
 }
