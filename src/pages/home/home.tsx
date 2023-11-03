@@ -39,7 +39,7 @@ export default function Home(props: PageProp) {
           {...DUMMY_SITES.map(function (site, idx) {
             return (
               <>
-                <SiteCard />
+                <SiteCard siteName={site}/>
                 {idx !== DUMMY_SITES.length - 1 ? <Divider indent={50}/> : null}
               </>
             );
