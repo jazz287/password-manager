@@ -1,5 +1,5 @@
-import Heading_bar from "../home/Heading_bar";
-import Custom_button from "../home/custom_button";
+import Heading_bar from "../../components/Heading_bar";
+import Custom_button from "../../components/custom_button";
 import "./new_password.css";
 export default function New_password() {
   return (

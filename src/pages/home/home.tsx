@@ -1,7 +1,6 @@
-import { Search } from "@carbon/icons-react";
 import { SiteCard } from "./site_card";
-import Custom_button from "./custom_button";
-import Heading_bar from "./Heading_bar";
+import Custom_button from "../../components/custom_button";
+import Heading_bar from "../../components/Heading_bar";
 
 export default function Home() {
   return (
