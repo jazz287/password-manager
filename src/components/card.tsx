@@ -10,6 +10,7 @@ export default function Card(props: CardProps) {
         borderRadius : "12px",
         color: "white",
         boxShadow : "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        overflow:"hidden",
       }}
     >
       {props.children}

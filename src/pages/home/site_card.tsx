@@ -1,14 +1,9 @@
 import { CaretRight, LogoGithub } from "@carbon/icons-react";
+import "./site_card.css";
 
 export const SiteCard = () => (
   <div
-    style={{
-      display: "flex",
-      width: "100%",
-      justifyContent: "space-between",
-      minHeight:"48px",
-      alignItems: "center",
-    }}
+    className="site-card"
   >
     <div>
       <LogoGithub style={{
