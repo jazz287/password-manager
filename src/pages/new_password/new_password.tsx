@@ -5,7 +5,7 @@ import "./new_password.css";
 export default function New_password() {
   return (
     <div>
-      <Heading_bar />
+      <Heading_bar title="New Password"/>
       <Container>
         <div>
           Site:

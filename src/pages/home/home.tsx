@@ -7,7 +7,7 @@ import Card from "../../components/card";
 export default function Home() {
   return (
     <div>
-      <Heading_bar />
+      <Heading_bar title="Password Manager"/>
       <Container>
         <center>
           <Custom_button title="New Password" />
