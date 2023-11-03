@@ -23,7 +23,7 @@ export default function New_password(props: PageProp) {
         </div>
         <div>
           Password:
-          <input type="text" />
+          <input type="text"/>
           <Custom_button title="Generate Password" />
           <div className="strength-bg">
             <div className="strength-bar"></div>
