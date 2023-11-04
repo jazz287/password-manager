@@ -8,17 +8,11 @@ import Divider from "../../components/divider";
 
 interface PageProp {
   pageSetterFunction: Function;
+  siteList?: string[];
 }
 
-const DUMMY_SITES = [
-  "google.com",
-  "github.com",
-  "facebook.com",
-  "youtube.com",
-  "myupes.upes.ac.in",
-];
-
 export default function Home(props: PageProp) {
+  const siteList = props.siteList ?? [];
   return (
     <div>
       <Heading_bar title="Password Manager" />
@@ -28,7 +22,10 @@ export default function Home(props: PageProp) {
             title="New Password"
             onClick={function () {
               props.pageSetterFunction(
-                <New_password pageSetterFunction={props.pageSetterFunction} />
+                <New_password
+                  pageSetterFunction={props.pageSetterFunction}
+                  homeSiteList={siteList}
+                />
               );
             }}
           />
@@ -36,11 +33,11 @@ export default function Home(props: PageProp) {
         <br />
         <br />
         <Card>
-          {...DUMMY_SITES.map(function (site, idx) {
+          {...siteList.map(function (site, idx) {
             return (
               <>
-                <SiteCard siteName={site}/>
-                {idx !== DUMMY_SITES.length - 1 ? <Divider indent={50}/> : null}
+                <SiteCard siteName={site} />
+                {idx !== siteList.length - 1 ? <Divider indent={50} /> : null}
               </>
             );
           })}

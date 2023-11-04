@@ -1,4 +1,4 @@
-import { createRef, useState } from "react";
+import { useState } from "react";
 import Heading_bar from "../../components/Heading_bar";
 import { Container } from "../../components/container";
 import Home from "../home/home";
@@ -8,6 +8,7 @@ import RuleCard from "./rule_card";
 
 interface PageProp {
   pageSetterFunction: Function;
+  homeSiteList: string[];
 }
 
 export default function New_password(props: PageProp) {
@@ -17,6 +18,48 @@ export default function New_password(props: PageProp) {
     numbers: false,
     atLeastEightChars: false,
   });
+  const checkRules = (value: string) => {
+    let newRules = { ...rules };
+    if (value.length >= 8) {
+      newRules.atLeastEightChars = true;
+    } else {
+      newRules.atLeastEightChars = false;
+    }
+    if (/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(value)) {
+      newRules.specialChars = true;
+    } else {
+      newRules.specialChars = false;
+    }
+    if (/\d/.test(value)) {
+      newRules.numbers = true;
+    } else {
+      newRules.numbers = false;
+    }
+    if (/\b(?=[a-z]+[A-Z]+|[A-Z]+[a-z]+)[a-zA-Z]{8,20}\b/gm.test(value)) {
+      newRules.upperAndLowerCase = true;
+    } else {
+      newRules.upperAndLowerCase = false;
+    }
+
+    setRules(newRules);
+  };
+
+  const saveForm = () => {
+    const siteInput =
+      document.querySelector<HTMLInputElement>(".siteInput input")!;
+    const usernameInput = document.querySelector<HTMLInputElement>(
+      ".usernameInput input"
+    )!;
+    const passwordInput = document.querySelector<HTMLInputElement>(
+      ".passwordInput input"
+    )!;
+    props.pageSetterFunction(
+      <Home
+        pageSetterFunction={props.pageSetterFunction}
+        siteList={[...props.homeSiteList, siteInput.value]}
+      />
+    );
+  };
   let percent = 0;
   Object.values(rules).map((r) => (r ? (percent += 25) : null));
   return (
@@ -26,48 +69,64 @@ export default function New_password(props: PageProp) {
         <Form>
           <Form.Field>
             <label>Site Name</label>
-            <Input placeholder="mysite.com" label="https://" />
+            <Input
+              placeholder="mysite.com"
+              label="https://"
+              className="siteInput"
+            />
           </Form.Field>
           <Form.Field>
             <label>Username</label>
-            <Input placeholder="someone@example.com" />
+            <Input
+              placeholder="someone@example.com"
+              className="usernameInput"
+            />
           </Form.Field>
           <Form.Field>
             <label>Password</label>
             <Input
+              className="passwordInput"
               type={"password"}
               placeholder="**secret**"
-              action="Generate Password"
+              action={
+                <Button
+                  onClick={() => {
+                    let passwordInput =
+                      document.querySelector<HTMLInputElement>(
+                        ".passwordInput input"
+                      )!;
+                    let randomPassword = "";
+                    for (let i = 0; i < 8; i++) {
+                      if (i < 2) {
+                        randomPassword += String.fromCharCode(
+                          Math.floor(Math.random() * (122 - 97 + 1)) + 97
+                        );
+                      } else if (i < 4) {
+                        randomPassword += Math.floor(Math.random() * 9);
+                      } else if (i < 6) {
+                        let specialChars = ".!_@-";
+                        randomPassword +=
+                          specialChars[
+                            Math.floor(Math.random() * specialChars.length)
+                          ];
+                      } else {
+                        randomPassword += String.fromCharCode(
+                          Math.floor(Math.random() * (90 - 65 + 1)) + 65
+                        );
+                      }
+                    }
+                    passwordInput.value = randomPassword;
+                    checkRules(randomPassword);
+                  }}
+                >
+                  Generate Password
+                </Button>
+              }
               actionPosition="left"
               onChange={function (_, b) {
                 let value = b.value;
-                let newRules = { ...rules };
-                if (value.length >= 8) {
-                  newRules.atLeastEightChars = true;
-                } else {
-                  newRules.atLeastEightChars = false;
-                }
-                if (/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(value)) {
-                  newRules.specialChars = true;
-                } else {
-                  newRules.specialChars = false;
-                }
-                if (/\d/.test(value)) {
-                  newRules.numbers = true;
-                } else {
-                  newRules.numbers = false;
-                }
-                if (
-                  /\b(?=[a-z]+[A-Z]+|[A-Z]+[a-z]+)[a-zA-Z]{8,20}\b/gm.test(
-                    value
-                  )
-                ) {
-                  newRules.upperAndLowerCase = true;
-                } else {
-                  newRules.upperAndLowerCase = false;
-                }
 
-                setRules(newRules);
+                checkRules(value);
               }}
             />
             <Progress percent={percent} indicating />
@@ -81,15 +140,7 @@ export default function New_password(props: PageProp) {
           >
             Cancel
           </Button>
-          <Button
-            primary={true}
-            disabled={percent < 60}
-            onClick={function () {
-              props.pageSetterFunction(
-                <Home pageSetterFunction={props.pageSetterFunction} />
-              );
-            }}
-          >
+          <Button primary={true} disabled={percent < 60} onClick={saveForm}>
             Save
           </Button>
         </Form>
