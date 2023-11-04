@@ -3,7 +3,14 @@ import Heading_bar from "../../components/Heading_bar";
 import { Container } from "../../components/container";
 import Home from "../home/home";
 import "./new_password.css";
-import { Progress, Input, Form, Button } from "semantic-ui-react";
+import {
+  Progress,
+  Input,
+  Form,
+  Button,
+  Message,
+  Transition,
+} from "semantic-ui-react";
 import RuleCard from "./rule_card";
 
 interface PageProp {
@@ -12,6 +19,7 @@ interface PageProp {
 }
 
 export default function New_password(props: PageProp) {
+  const [isFormValid, setIsFormValid] = useState(true);
   const [rules, setRules] = useState({
     upperAndLowerCase: false,
     specialChars: false,
@@ -55,7 +63,32 @@ export default function New_password(props: PageProp) {
     setRules(newRules);
   };
 
+  const formValid = () => {
+    const siteInput =
+      document.querySelector<HTMLInputElement>(".siteInput input")!;
+    const usernameInput = document.querySelector<HTMLInputElement>(
+      ".usernameInput input"
+    )!;
+    const passwordInput = document.querySelector<HTMLInputElement>(
+      ".passwordInput input"
+    )!;
+
+    let res = true;
+    if (
+      siteInput.value.length == 0 ||
+      usernameInput.value.length == 0 ||
+      passwordInput.value.length == 0
+    ) {
+      res = false;
+    }
+    return res;
+  };
+
   const saveForm = () => {
+    if (!formValid()) {
+      setIsFormValid(false);
+      return;
+    }
     const siteInput =
       document.querySelector<HTMLInputElement>(".siteInput input")!;
     const usernameInput = document.querySelector<HTMLInputElement>(
@@ -156,7 +189,12 @@ export default function New_password(props: PageProp) {
           </Button>
         </Form>
         <br />
-        <br />
+        <Transition visible={!isFormValid} animation="scale" duration={500}>
+          <Message>
+            <Message.Header>Invalid Form</Message.Header>
+            <p>Check all fields again before submitting</p>
+          </Message>
+        </Transition>
         <h4>Password Strength</h4>
         <br />
         <RuleCard
