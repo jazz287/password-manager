@@ -35,7 +35,18 @@ export default function New_password(props: PageProp) {
     } else {
       newRules.numbers = false;
     }
-    if (/\b(?=[a-z]+[A-Z]+|[A-Z]+[a-z]+)[a-zA-Z]{8,20}\b/gm.test(value)) {
+    let inlcudesUppercase = false;
+    let includesLowercase = false;
+    for (let char of value) {
+      let code = char.charCodeAt(0);
+      if (code >= 65 && code <= 90) {
+        inlcudesUppercase = true;
+      }
+      if (code >= 97 && code <= 122) {
+        includesLowercase = true;
+      }
+    }
+    if (inlcudesUppercase && includesLowercase) {
       newRules.upperAndLowerCase = true;
     } else {
       newRules.upperAndLowerCase = false;
